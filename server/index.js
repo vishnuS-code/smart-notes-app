@@ -16,8 +16,11 @@ if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 const notesPath = path.join(dataDir, 'notes.json');
 if (!fs.existsSync(notesPath)) fs.writeFileSync(notesPath, '[]', 'utf8');
 
+// Allow localhost and any LAN IP (192.168.x.x) on port 5173
+const allowedOrigin = /^http:\/\/(localhost|192\.168\.\d{1,3}\.\d{1,3}):5173$/;
+
 // Middleware
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,6 +38,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
