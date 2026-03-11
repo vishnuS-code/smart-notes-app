@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NoteCard from '../components/NoteCard';
 import { SkeletonCard } from '../components/Loader';
@@ -16,6 +16,7 @@ export default function NotesDashboard() {
   const [search, setSearch] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const searchQueryRef = useRef('');
 
   const fetchNotes = async () => {
     setLoading(true);
@@ -34,12 +35,18 @@ export default function NotesDashboard() {
   const handleSearch = async (e) => {
     const q = e.target.value;
     setSearch(q);
+    searchQueryRef.current = q;
     if (!q.trim()) { fetchNotes(); return; }
+    setLoading(true);
     try {
       const res = await searchNotes(q);
-      setNotes(res.data);
+      if (searchQueryRef.current === q) {
+        setNotes(res.data);
+      }
     } catch {
-      setError('Search failed');
+      if (searchQueryRef.current === q) setError('Search failed');
+    } finally {
+      if (searchQueryRef.current === q) setLoading(false);
     }
   };
 

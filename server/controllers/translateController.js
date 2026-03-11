@@ -1,7 +1,7 @@
 const translate = async (req, res) => {
   try {
     const { text, targetLanguage } = req.body;
-    if (!text || !targetLanguage) {
+    if (!text?.trim() || !targetLanguage?.trim()) {
       return res.status(400).json({ error: 'text and targetLanguage are required' });
     }
 

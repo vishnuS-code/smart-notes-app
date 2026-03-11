@@ -44,6 +44,8 @@ export default function WordExtractor() {
       });
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2200);
+      setDone(false);
+      setText('');
     } catch {
       setError('Failed to save note');
     } finally {

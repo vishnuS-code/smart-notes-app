@@ -21,6 +21,7 @@
   --placeholder: #94a3b8;
   --skeleton-base: #e2e8f0;
   --skeleton-highlight: #f8fafc;
+  --btn-color: #ffffff;
 }
 
 /* ===== Theme variables — dark ===== */
@@ -39,6 +40,7 @@
   --placeholder: #64748b;
   --skeleton-base: #1e293b;
   --skeleton-highlight: #334155;
+  --btn-color: #ffffff;
 }
 
 /* ===== Base element styles ===== */

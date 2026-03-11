@@ -56,6 +56,9 @@ export default function PDFExtractor() {
       });
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2200);
+      setUploadSuccess(false);
+      setText('');
+      setPages(null);
     } catch {
       setError('Failed to save note');
     } finally {

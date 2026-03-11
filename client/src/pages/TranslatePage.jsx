@@ -81,7 +81,7 @@ export default function TranslatePage() {
             gap: '0.5rem',
           }}
         >
-          {loading && <Spinner size={16} color="#fff" />}
+          {loading && <Spinner size={16} color="var(--btn-color)" />}
           {loading ? 'Translating...' : 'Translate'}
         </motion.button>
       </motion.form>

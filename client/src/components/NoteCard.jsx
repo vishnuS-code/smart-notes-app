@@ -21,7 +21,9 @@ export default function NoteCard({ note, onEdit, onDelete }) {
       <div style={styles.header}>
         <h3 style={styles.title}>{note.title}</h3>
         <span style={styles.date}>
-          {new Date(note.createdAt).toLocaleDateString()}
+          {note.createdAt && !isNaN(new Date(note.createdAt).getTime())
+            ? new Date(note.createdAt).toLocaleDateString()
+            : '—'}
         </span>
       </div>
       <p style={styles.content}>{note.content}</p>

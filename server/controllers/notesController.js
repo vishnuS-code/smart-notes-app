@@ -20,13 +20,24 @@ const searchNotes = (req, res) => {
   }
 };
 
+const getNoteById = (req, res) => {
+  try {
+    const { id } = req.params;
+    const note = noteService.getNoteById(id);
+    if (!note) return res.status(404).json({ error: 'Note not found' });
+    res.json(note);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch note' });
+  }
+};
+
 const createNote = (req, res) => {
   try {
     const { title, content } = req.body;
-    if (!title || !content) {
+    if (!title?.trim() || !content?.trim()) {
       return res.status(400).json({ error: 'Title and content are required' });
     }
-    const note = noteService.createNote({ title, content });
+    const note = noteService.createNote({ title: title.trim(), content: content.trim() });
     res.status(201).json(note);
   } catch (err) {
     res.status(500).json({ error: 'Failed to create note' });
@@ -37,10 +48,10 @@ const updateNote = (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
-    if (!title || !content) {
+    if (!title?.trim() || !content?.trim()) {
       return res.status(400).json({ error: 'Title and content are required' });
     }
-    const updated = noteService.updateNote(id, { title, content });
+    const updated = noteService.updateNote(id, { title: title.trim(), content: content.trim() });
     if (!updated) return res.status(404).json({ error: 'Note not found' });
     res.json(updated);
   } catch (err) {
@@ -59,4 +70,4 @@ const deleteNote = (req, res) => {
   }
 };
 
-module.exports = { getAllNotes, searchNotes, createNote, updateNote, deleteNote };
+module.exports = { getAllNotes, getNoteById, searchNotes, createNote, updateNote, deleteNote };
